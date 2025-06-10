@@ -1,0 +1,420 @@
+/* Modern and responsive styles for the PDF Analyzer */
+
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #64748b;
+  --background-color: #f8fafc;
+  --card-background: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Layout */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Card styles */
+.card {
+  background-color: var(--card-background);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #475569;
+}
+
+/* File upload area */
+.file-upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--card-background);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: #f1f5f9;
+}
+
+/* PDF viewer container */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 200px);
+  background-color: #f1f5f9;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-top: 0.5rem;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease-out;
+}
+
+.canvas-wrapper.dragging {
+  cursor: grabbing;
+}
+
+.canvas-wrapper:not(.dragging) {
+  cursor: grab;
+}
+
+/* PDF Canvas */
+.pdf-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: var(--shadow-lg);
+  background-color: white;
+}
+
+/* Zoom Controls */
+.zoom-controls {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+.zoom-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.zoom-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zoom-info {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  z-index: 20;
+}
+
+/* Annotation Overlay */
+.annotation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.annotation-polygon {
+  fill: rgba(37, 99, 235, 0.1);
+  stroke: rgba(37, 99, 235, 0.8);
+  stroke-width: 2;
+  pointer-events: all;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.annotation-polygon:hover {
+  fill: rgba(37, 99, 235, 0.2);
+}
+
+.annotation-selection {
+  fill: rgba(37, 99, 235, 0.2);
+  stroke: rgba(37, 99, 235, 1);
+  stroke-width: 3;
+  stroke-dasharray: 4;
+  animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+.annotation-label-bg {
+  fill: rgba(0, 0, 0, 0.7);
+  rx: 2;
+  ry: 2;
+}
+
+.annotation-label-text {
+  fill: white;
+  font-size: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Status bar */
+.status-bar {
+  padding: 0.75rem 1rem;
+  background-color: var(--card-background);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+  }
+
+  .canvas-container {
+    height: calc(100vh - 150px);
+  }
+
+  .zoom-controls {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .zoom-info {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Loading states */
+.loading {
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Sticky Zoom Controls */
+.sticky-zoom-controls {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.sticky-zoom-controls .zoom-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sticky-zoom-controls .zoom-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.sticky-zoom-controls .zoom-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sticky-zoom-controls .zoom-info {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-left: 1px solid var(--border-color);
+  margin-left: 0.5rem;
+} 

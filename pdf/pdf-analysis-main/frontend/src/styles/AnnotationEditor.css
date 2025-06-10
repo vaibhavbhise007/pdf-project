@@ -1,0 +1,62 @@
+.annotation-editor {
+  position: fixed;
+  top: 100px;
+  right: 50px;
+  background-color: transparent; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  backdrop-filter: blur(4px); /* optional: adds a subtle frosted glass effect */
+}
+
+
+.editor-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.editor-input-container {
+  margin-bottom: 10px;
+}
+
+.editor-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.editor-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-btn, .delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.update-btn {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.update-btn:hover {
+  background-color: #27ae60;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}

@@ -1,0 +1,96 @@
+.landing-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.main-content {
+    flex: 1;
+    padding-top: 8rem;
+    text-align: center;
+}
+
+.pdf-annotations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.class-buttons-panel {
+    width: 100%;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgb(250, 250, 250);
+    background-color: #f8fafc;
+}
+
+.pdf-viewer-panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.compare-bill-container {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.compare-bill-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.excel-upload-panel {
+    width: 100%;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.results-table-panel {
+    width: 100%;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Media query for desktop view */
+@media (min-width: 768px) {
+    .pdf-annotations-container {
+        flex-direction: row;
+    }
+
+    .class-buttons-panel {
+        flex: 0 0 25%;
+        width: 25%;
+        border-right: 1px solid rgb(250, 250, 250);
+        border-bottom: none;
+    }
+
+    .compare-bill-content {
+        flex-direction: row;
+    }
+
+    .excel-upload-panel {
+        flex: 0 0 35%;
+        width: 35%;
+    }
+
+    .results-table-panel {
+        flex: 0 0 60%;
+        width: 60%;
+    }
+} 

@@ -1,0 +1,278 @@
+:root {
+  --nude-bg: #ffffff;
+  --nude-light: #f1f0ef;
+  --nude-dark: #9f9e9c;
+  --nude-border: #f4e8db;
+  --nude-accent: #e0dbc2;
+  --text-primary: #4e433f;
+  --annotation-main: #c27b7f;
+  --annotation-fill: rgba(194, 123, 127, 0.2);
+  --annotation-fill-hover: rgba(194, 123, 127, 0.35);
+}
+
+.pdf-annotator {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--nude-bg);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.header {
+  padding: 10px 20px;
+  background-color: var(--nude-accent);
+  border-bottom: 1px solid var(--nude-border);
+}
+
+.header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.file-inputs {
+  display: flex;
+  gap: 20px;
+  padding: 15px 20px;
+  background-color: var(--nude-light);
+  border-bottom: 1px solid var(--nude-border);
+  flex-wrap: wrap;
+}
+
+.file-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.file-input-container label {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.file-input-container input[type="file"] {
+  padding: 8px;
+  border: 1px solid var(--nude-border);
+  border-radius: 4px;
+  background-color: #fdfaf7;
+  cursor: pointer;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.file-input-container input[type="file"]:hover {
+  border-color: var(--nude-accent);
+}
+
+.file-input-container input[type="file"]:focus {
+  outline: none;
+  border-color: var(--nude-accent);
+  box-shadow: 0 0 0 0.2rem rgba(200, 182, 166, 0.3);
+}
+
+.canvas-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--nude-light);
+  border: 1px solid var(--nude-border);
+  margin: 10px;
+  border-radius: 4px;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+
+.canvas-container:active {
+  cursor: grabbing;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(253, 250, 247, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 100;
+  font-weight: 500;
+  color: var(--text-primary);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-wrapper {
+  position: relative;
+  transform-origin: 0 0;
+  user-select: none;
+  border-radius: 4px;
+}
+
+.canvas-wrapper.dragging {
+  cursor: grabbing;
+}
+
+.pdf-canvas {
+  display: block;
+  background-color: #fdfaf7;
+  border-radius: 4px;
+}
+
+.annotation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* Annotation styles */
+.annotation-selection {
+  stroke: var(--nude-dark);
+  stroke-width: 2;
+  fill: rgba(160, 147, 132, 0.25);
+  pointer-events: none;
+}
+
+
+
+.annotation-polygon {
+  stroke: var(--annotation-main);
+  stroke-width: 0.5;
+  fill: var(--annotation-fill);
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.annotation-polygon:hover {
+  fill: var(--annotation-fill-hover);
+  stroke-width: 2;
+}
+
+.annotation-label-bg {
+  fill: rgba(253, 250, 247, 0.95);
+  stroke: var(--annotation-main);
+  stroke-width: 0.5;
+  rx: 2;
+  cursor: pointer;
+}
+
+
+.annotation-label-text {
+  fill: var(--annotation-main);
+  font-size: 8px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+
+.zoom-info {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(80, 70, 60, 0.85);
+  color: #fffaf4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .file-inputs {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .canvas-container {
+    margin: 5px;
+  }
+  .zoom-info {
+    font-size: 11px;
+    padding: 6px 10px;
+    bottom: 5px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 8px 15px;
+  }
+  .header h1 {
+    font-size: 1.25rem;
+  }
+  .file-inputs {
+    padding: 10px 15px;
+  }
+  .file-input-container label {
+    font-size: 0.85rem;
+  }
+}
+
+@media print {
+  .pdf-annotator {
+    height: auto;
+  }
+  .file-inputs,
+  .zoom-info {
+    display: none;
+  }
+  .canvas-container {
+    border: none;
+    margin: 0;
+    background: white;
+  }
+}
+
+.file-input-container button {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--nude-accent);
+  border: 1px solid var(--nude-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-family: inherit;
+}
+
+.file-input-container button:hover {
+  background-color: var(--nude-dark);
+  color: white;
+  border-color: var(--nude-dark);
+}
+
+.file-input-container button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(160, 147, 132, 0.35);
+}
+
+/* Updated CSS for smaller labels */
+
+.annotation-label-bg {
+  fill: rgba(253, 250, 247, 0.95);
+  stroke: var(--annotation-main);
+  stroke-width: 0.5;
+  rx: 1;
+  cursor: pointer;
+}
+
+.annotation-label-text {
+  fill: var(--annotation-main);
+  font-size: 3px;
+  font-weight: 300;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  user-select: none;
+  dominant-baseline: middle;
+}

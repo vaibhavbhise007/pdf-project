@@ -1,0 +1,15 @@
+.status-bar {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  box-sizing: border-box; /* ensures padding doesn't overflow width */
+}
+
+.status-message {
+  font-size: 0.9rem;
+  color: #27d12f;
+  word-wrap: break-word; /* ensures text doesn't overflow */
+}
